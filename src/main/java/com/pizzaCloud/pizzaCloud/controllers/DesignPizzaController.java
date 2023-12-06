@@ -18,13 +18,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequestMapping("/design")
-@SessionAttributes("tacoOrder")
+@SessionAttributes("pizzaOrder")
 public class DesignPizzaController {
 
 
     @ModelAttribute
     public void addIngredientsToModel(Model model) {
         List<Ingredient> ingredients = Arrays.asList(
+                new Ingredient("SLIM", "Slim", Type.DOUGH),
+                new Ingredient("FATT", "Fat", Type.DOUGH),
+                new Ingredient("RABB", "Rabbit", Type.MEAT),
+                new Ingredient("COWW", "Cow", Type.MEAT),
                 new Ingredient("TMTO", "Diced Tomatoes", Type.VEGGIES),
                 new Ingredient("LETC", "Lettuce", Type.VEGGIES),
                 new Ingredient("CHED", "Cheddar", Type.CHEESE),
@@ -38,6 +42,15 @@ public class DesignPizzaController {
                     filterByType(ingredients, type));
         }
     }
+
+    @PostMapping
+    public String processTaco(Pizza pizza,
+                              @ModelAttribute PizzaOrder pizzaOrder) {
+        pizzaOrder.addPizza(pizza);
+        log.info("Processing taco: {}", pizza);
+        return "redirect:/orders/current";
+    }
+
     @ModelAttribute(name = "pizzaOrder")
     public PizzaOrder order() {
         return new PizzaOrder();

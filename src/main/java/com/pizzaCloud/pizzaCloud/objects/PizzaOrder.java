@@ -14,7 +14,7 @@ public class PizzaOrder {
     private String ccExpiration;
     private String ccCVV;
     private List<Pizza> pizzas = new ArrayList<>();
-    public void addTaco(Pizza pizza) {
+    public void addPizza(Pizza pizza) {
         this.pizzas.add(pizza);
     }
 }
